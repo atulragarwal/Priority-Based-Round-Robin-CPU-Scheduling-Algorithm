@@ -1,0 +1,121 @@
+#include<stdio.h>
+#include<math.h>
+float time_q(int b[],int num)
+{
+    float tq=0;
+    int count=0,i;
+    for(i=0;i<n;i++)
+    {
+            tq+=b[i];
+            count++;
+    }
+    tq=tq/count;
+    return tq;
+}
+
+void sort(int id[],float wt[],int b[],int a[])
+{
+	int i,j;
+	for(i=0;i<n;i++)
+    {
+		for(j=i+1;j<n;j++)
+        {
+            if(wt[i]>wt[j])
+            {
+              	a[i]+=a[j];
+                a[j]=a[i]-a[j];
+                a[i]=a[i]-a[j];
+              	id[i]+=id[j];
+                id[j]=id[i]-id[j];
+                id[i]=id[i]-id[j];
+              	b[i]+=b[j];
+                b[j]=b[i]-b[j];
+                b[i]=b[i]-b[j];
+                wt[i]+=wt[j];
+                wt[j]=wt[i]-wt[j];
+                wt[i]=wt[i]-wt[j];
+            }
+            else if(wt[i]==wt[j])
+            {
+          	    if(id[i]>id[j])
+                {
+                    a[i]+=a[j];
+                    a[j]=a[i]-a[j];
+                    a[i]=a[i]-a[j];
+                    id[i]+=id[j];
+                    id[j]=id[i]-id[j];
+                    id[i]=id[i]-id[j];
+                    b[i]+=b[j];
+                    b[j]=b[i]-b[j];
+                    b[i]=b[i]-b[j];
+                    wt[i]+=wt[j];
+                    wt[j]=wt[i]-wt[j];
+                    wt[i]=wt[i]-wt[j];
+                }
+                else
+                {
+                    a[i]+=a[j];
+                    a[j]=a[i]-a[j];
+                    a[i]=a[i]-a[j];
+                    id[j]+=id[i];
+                    id[i]=id[j]-id[i];
+                    id[j]=id[j]-id[i];
+                    b[j]+=b[i];
+                    b[i]=b[j]-b[i];
+                    b[j]=b[j]-b[i];
+                    wt[i]+=wt[j];
+                    wt[j]=wt[i]-wt[j];
+                    wt[i]=wt[i]-wt[j];
+                }
+            }
+        }
+    }
+
+}
+
+void rr(int n,int burst[],int time_quantum,int arr[],float w[],int p_id[])
+{
+    int i,time,,bur[n],p[n]art[n];
+    while(true)
+    {
+        for(i=0;i<n;i++)
+        {
+            if(arr[i]<time)
+            {
+               bur[i]=burst[i];
+               p[i]=p_id[i];
+               weight[i]=w[i];
+               art[i]=arr[i];
+            }
+        }
+        int num=sizeof(bur)/sizeof(bur[0]);
+        time_quantum=time_q(bur[num],num);
+        sort(p[num],weight[num],bur[num],art[num]);
+    }
+}
+
+int main()
+{
+    int n;
+    printf("\nEnter Number Of Processes: ");
+    scanf("%d",&n);
+    int pid[n],bt[n],at[n],pri[n],tc;
+    float wt_fac[n];
+    printf("\nEnter First Arrival First!!!\n");
+    for(int i=0;i<n;i++)
+    {
+        printf("\nEnter Process ID: ");
+        scanf("%d",&pid[i]);
+        printf("\nEnter Burst Time: ");
+        scanf("%d",&bt[i]);
+        printf("\nEnter Arrival Time: ");
+        scanf("%d",&at[i]);
+        printf("\nEnter Priority: ");
+        scanf("%d",&pri[i]);
+        wt_fac[i] = pri*0.8 + bt[i]*0.7 + at[i]*0.2;
+    }
+    tc=at[0];
+    float ti_q=tc;
+    rr(n,bt[n],ti_q, at[n],wt_fac[n], pid[n]);
+    return 0;
+}
